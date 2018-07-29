@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Cipher test</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<div class="container mt-4">
+    <div class="jumbotron">
+        <h1 class="display-4">Caesar cipher</h1>
+        <p class="lead">Each letter in the plain text is replaced by the 13th letter after it in the alphabet.</p>
+        <hr class="my-4">
+        <form>
+            <div class="row" id="caesar-cipher">
+                <div class="col">
+                    <label for="plain">Text plain</label>
+                    <input type="text" class="form-control" id="plain" v-model="plain" placeholder="Lets go!">
+                </div>
+                <div class="col">
+                    <label for="cipher">Cipher code</label>
+                    <p class="form-control bg-success">{{ cipher }}</p>
+                </div>
+            </div>
+        </form>
+        <a class="btn btn-primary btn-lg mt-4" href="https://godoc.org/github.com/rvflash/cipher/caesar" role="button" target="_blank" rel="noopener">Learn more</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.18.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <script>
+        var caesar = new Vue({
+            el: "#caesar-cipher",
+            data: {
+                plain: "",
+                cipher: "",
+            },
+            watch: {
+                plain: function () {
+                    this.cipher = "Waiting for you to stop typing..."
+                    this.debouncedEncrypt()
+                }
+            },
+            created: function () {
+                // Provided by lodash to limit how often a particularly expensive operation can be run.
+                // See: https://lodash.com/docs#debounce
+                this.debouncedEncrypt = _.debounce(this.encrypt, 500)
+            },
+            methods: {
+                encrypt:  function () {
+                    if (this.plain.toString().trim() === "") {
+                        // No data to process.
+                        return
+                    }
+                    this.cipher = "Encrypting..."
+                    var vm = this
+                    axios.get('/caesar', {
+                        params: {
+                            s: vm.plain
+                        }
+                    })
+                    .then(function (response) {
+                        vm.cipher = response.data
+                    })
+                    .catch(function (error) {
+                        vm.cipher = "Error: " + error
+                    })
+                }
+            }
+        })
+    </script>
+</div>
+</body>
+</html>

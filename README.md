@@ -8,7 +8,7 @@ For now, only the [Caesar cipher](http://github.com/rvflash/cipher/caesar) is av
 
 ## Installation
 
-```
+```bash
 $ go get github.com/rvflash/cipher
 ```
 
@@ -16,7 +16,7 @@ $ go get github.com/rvflash/cipher
 
 If you just need a Go package to play with the Caesar code, see the example bellow :  
 
-```
+```go
 import (
 	"fmt"
 	"github.com/rvflash/cipher/caesar"
@@ -37,7 +37,7 @@ As you can see, you can directly use the most famous version of the Caesar ciphe
 
 If you just want to play with it in your browser, you can start the HTTP server on localhost:8080.
 
-```
+```bash
 $ cd $GOPATH/github.com/rvflash/cipher/cmd/cipher
 $ go build && ./cipher
 ```

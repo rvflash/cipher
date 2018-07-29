@@ -17,7 +17,7 @@ See the [documentation](https://godoc.org/github.com/rvflash/cipher/caesar) for 
 
 ## Quick start
 
-```
+```go
 import (
 	"fmt"
 	"github.com/rvflash/cipher/caesar"

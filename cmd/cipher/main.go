@@ -15,7 +15,7 @@ import (
 	"github.com/rvflash/cipher/caesar"
 )
 
-func CaesarHandler(w http.ResponseWriter, r *http.Request) {
+func caesarHandler(w http.ResponseWriter, r *http.Request) {
 	// Parses the query string.
 	q := r.URL.Query()
 	s, ok := q["s"]
@@ -32,10 +32,14 @@ func CaesarHandler(w http.ResponseWriter, r *http.Request) {
 	// Allows access to the API with JS calls.
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 	w.Header().Set("Access-Control-Allow-Methods", "GET")
-	w.Write(res)
+	_, err = w.Write(res)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
-func DefaultHandler(w http.ResponseWriter, r *http.Request) {
+func defaultHandler(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		http.NotFound(w, r)
 		return
@@ -49,9 +53,9 @@ func main() {
 	flag.Parse()
 
 	// Caesar cipher handler.
-	http.HandleFunc("/caesar", CaesarHandler)
+	http.HandleFunc("/caesar", caesarHandler)
 	// Landing page.
-	http.HandleFunc("/", DefaultHandler)
+	http.HandleFunc("/", defaultHandler)
 
 	// Start the server.
 	addr := ":" + strconv.Itoa(*port)

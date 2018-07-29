@@ -4,7 +4,7 @@
 [![Code Coverage](https://img.shields.io/codecov/c/github/rvflash/cipher.svg)](http://codecov.io/github/rvflash/cipher?branch=master)
 
 Ciphers is a just for fun project, created to provide some encryption methods not implemented in the standard crypto/cipher package. 
-For now, only the [Caesar cipher](http://github.com/rvflash/cipher/caesar) is available as Go package. 
+For now, only the [Caesar cipher](https://github.com/rvflash/cipher/tree/master/caesar) is available as Go package. 
 
 ## Installation
 
